@@ -90,9 +90,9 @@ The SDK archive `SAP_HANA_AFL_SDK_2_13_0.tgz` we extracted earlier from the .SAR
 After that we are determining and installing the proper GCC compiler version that will let us compile AFL functions.
 
 ### Upload and install SDK archive
-Connect to your booted HANA Express 2.0 virtual machine. I am using putty to `hxehost.localdomain`.
+Connect to your booted HANA Express 2.0 virtual machine. I am using PuTTY to `hxehost.localdomain`.
 
-Login with the `hxeadm` user and the password you defined at initial boot of the HXE appliance. I use Putty.
+Login with the `hxeadm` user and the password you defined at initial boot of the HXE appliance.
 
 **1. Determine home folder** of `hxeadm` and get its path
 
@@ -149,6 +149,20 @@ You can delete the .tgz file
     less README  # press space to page and q to exit
 
 **6. Permanently configure the variables to the SDK folder**
+
+The following will make use of `vi` in steps 1 to 3. If you don't like to use `vi` then you could also use the following `sed` command to do the same:
+
+````
+sed -i '$a\export HANA_SDK_PATH=/usr/sap/HXE/home/AFL_SDK_2_13_0\nexport PATH=$HANA_SDK_PATH/tools:$PATH' ~/.bashrc
+````
+
+> This command:
+> - `-i`: Edits the file in-place
+> - `$a`: Appends the text after the last line of the file
+> - `\n`: Creates a new line between the two export statements
+> - `~/.bashrc`: Targets the .bashrc file in the user's home directory
+
+If you used the `sed` alternative then skip to step 4.
 
 1. Open the .bashrc file:  
   `vi ~/.bashrc`
@@ -236,7 +250,7 @@ wget $base/gcc11-c++-11.3.0+git1637-150000.1.11.2.x86_64.rpm
 wget $base/libstdc++6-devel-gcc11-11.3.0+git1637-150000.1.11.2.x86_64.rpm
 ```
 
-> These four RPMs include the 11.3 compiler driver, C++ front end, standard library headers, and runtime.
+> These three RPMs include the 11.3 compiler driver, C++ front end, standard library headers, and runtime.
 > We will use the libgcc version that is installed on HXE: `rpm -q libgcc_s1` -> `libgcc_s1-13.2.1+git8285-150000.1.9.1.x86_64`
 
 #### Step 3: Install the Core Packages (Ignore Dependencies for Now)
@@ -400,7 +414,7 @@ Get the URL of the xsa-cockpit service:
 
 #### 2.1 Access the XSA Cockpit
 
-Open a browser like Firefox and navigate to the URL from above: `https://hxehost.localdomain:51035`
+Open a browser and navigate to the URL from above: `https://hxehost.localdomain:51035`. Since the SSL certificate is unknown to your browser you need to bypass the warning to force the navigation to the HXE servers service endpoint.
 
 #### 2.2 Log In with Administrator credentials
 
@@ -628,7 +642,6 @@ There are trace files you can check:
 # ls -1 scriptserver*.trc
 scriptserver_alert_hxehost.localdomain.trc
 scriptserver_hxehost.localdomain.39040.000.trc
-scriptserver_hxehost.localdomain.39043.000.trc
 ````
 Finding exceptions:
 ````
@@ -683,7 +696,17 @@ Open a SQL console.
 
 ![Open SQL console to the connected DB](/assets/webide-open-sql-console.png)
 
-Execute test for the string concatenation intro AFL function.
+Execute test for the string concatenation intro AFL function. Paste this into the SQL console window and click the play button to execute it:
+
+```sql
+-- Test the string concatenation intro AFL function
+CREATE COLUMN TABLE INPUT_TABLE ("StringColumn" VARCHAR(17));
+INSERT INTO INPUT_TABLE VALUES('My code works and');
+INSERT INTO INPUT_TABLE VALUES('Do I or');
+INSERT INTO INPUT_TABLE VALUES('My code fails and');
+
+CALL _SYS_AFL.INTRO_AREA_APPEND_TO_STRING_PROC(' I have no idea why', INPUT_TABLE, ?);
+```
 
 ![Test the intro AFL string concat function](/assets/webide-sql-test-intro-afl-string-concat.png)
 

@@ -46,7 +46,7 @@ Get the URL of the xsa-cockpit service:
 
 #### 2.1 Access the XSA Cockpit
 
-Open a browser like Firefox and navigate to the URL from above: `https://hxehost.localdomain:51035`
+Open a browser and navigate to the URL from above: `https://hxehost.localdomain:51035`. Since the SSL certificate is unknown to your browser you need to bypass the warning to force the navigation to the HXE servers service endpoint.
 
 #### 2.2 Log In with Administrator credentials
 
@@ -274,7 +274,6 @@ There are trace files you can check:
 # ls -1 scriptserver*.trc
 scriptserver_alert_hxehost.localdomain.trc
 scriptserver_hxehost.localdomain.39040.000.trc
-scriptserver_hxehost.localdomain.39043.000.trc
 ````
 Finding exceptions:
 ````
@@ -329,7 +328,17 @@ Open a SQL console.
 
 ![Open SQL console to the connected DB](/assets/webide-open-sql-console.png)
 
-Execute test for the string concatenation intro AFL function.
+Execute test for the string concatenation intro AFL function. Paste this into the SQL console window and click the play button to execute it:
+
+```sql
+-- Test the string concatenation intro AFL function
+CREATE COLUMN TABLE INPUT_TABLE ("StringColumn" VARCHAR(17));
+INSERT INTO INPUT_TABLE VALUES('My code works and');
+INSERT INTO INPUT_TABLE VALUES('Do I or');
+INSERT INTO INPUT_TABLE VALUES('My code fails and');
+
+CALL _SYS_AFL.INTRO_AREA_APPEND_TO_STRING_PROC(' I have no idea why', INPUT_TABLE, ?);
+```
 
 ![Test the intro AFL string concat function](/assets/webide-sql-test-intro-afl-string-concat.png)
 

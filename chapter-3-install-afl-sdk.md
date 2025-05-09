@@ -24,9 +24,9 @@ The SDK archive `SAP_HANA_AFL_SDK_2_13_0.tgz` we extracted earlier from the .SAR
 After that we are determining and installing the proper GCC compiler version that will let us compile AFL functions.
 
 ### Upload and install SDK archive
-Connect to your booted HANA Express 2.0 virtual machine. I am using putty to `hxehost.localdomain`.
+Connect to your booted HANA Express 2.0 virtual machine. I am using PuTTY to `hxehost.localdomain`.
 
-Login with the `hxeadm` user and the password you defined at initial boot of the HXE appliance. I use Putty.
+Login with the `hxeadm` user and the password you defined at initial boot of the HXE appliance.
 
 **1. Determine home folder** of `hxeadm` and get its path
 
@@ -83,6 +83,20 @@ You can delete the .tgz file
     less README  # press space to page and q to exit
 
 **6. Permanently configure the variables to the SDK folder**
+
+The following will make use of `vi` in steps 1 to 3. If you don't like to use `vi` then you could also use the following `sed` command to do the same:
+
+````
+sed -i '$a\export HANA_SDK_PATH=/usr/sap/HXE/home/AFL_SDK_2_13_0\nexport PATH=$HANA_SDK_PATH/tools:$PATH' ~/.bashrc
+````
+
+> This command:
+> - `-i`: Edits the file in-place
+> - `$a`: Appends the text after the last line of the file
+> - `\n`: Creates a new line between the two export statements
+> - `~/.bashrc`: Targets the .bashrc file in the user's home directory
+
+If you used the `sed` alternative then skip to step 4.
 
 1. Open the .bashrc file:  
   `vi ~/.bashrc`

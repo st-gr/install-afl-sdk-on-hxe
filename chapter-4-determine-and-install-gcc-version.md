@@ -69,7 +69,7 @@ wget $base/gcc11-c++-11.3.0+git1637-150000.1.11.2.x86_64.rpm
 wget $base/libstdc++6-devel-gcc11-11.3.0+git1637-150000.1.11.2.x86_64.rpm
 ```
 
-> These four RPMs include the 11.3 compiler driver, C++ front end, standard library headers, and runtime.
+> These three RPMs include the 11.3 compiler driver, C++ front end, standard library headers, and runtime.
 > We will use the libgcc version that is installed on HXE: `rpm -q libgcc_s1` -> `libgcc_s1-13.2.1+git8285-150000.1.9.1.x86_64`
 
 #### Step 3: Install the Core Packages (Ignore Dependencies for Now)
