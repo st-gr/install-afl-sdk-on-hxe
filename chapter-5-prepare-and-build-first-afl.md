@@ -318,7 +318,7 @@ Also, the authorization to create or erase AFL parameters (optional):
 
 Logon to WebIDE using the *ST-GR* user account:
 
-    https://hxehost.localdomain:51035/
+    https://hxehost.localdomain:53075/
 
 Add a database connection to our HANA Express 2.0 Appliance on `hxehost.localdomain`.
 
