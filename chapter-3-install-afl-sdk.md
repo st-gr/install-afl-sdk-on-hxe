@@ -13,7 +13,7 @@ Install AFL SDK on HANA Express
 
 **Author:** *st-gr*
 
-[<< Previous Chapter](chapter-2-preparations.md) | [Content Table](README.md) | [Next Chapter >>](chapter-4-determine-gcc.md)
+[<< Previous Chapter](chapter-2-preparations.md) | [Content Table](README.md) | [Next Chapter >>](chapter-4-determine-and-install-gcc-version.md)
 
 ---
 
@@ -118,4 +118,4 @@ We have permanently set the `HANA_SDK_PATH` environment variable and added the S
 
 ---
 
-[<< Previous Chapter](chapter-2-preparations.md) | [Content Table](README.md) | [Next Chapter >>](chapter-4-determine-gcc.md)
+[<< Previous Chapter](chapter-2-preparations.md) | [Content Table](README.md) | [Next Chapter >>](chapter-4-determine-and-install-gcc-version.md)
